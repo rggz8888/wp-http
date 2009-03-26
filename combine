@@ -1,0 +1,32 @@
+#!/usr/bin/env php
+<?php
+
+$src = dirname(__FILE__) . '/src';
+
+$files = array(
+	'WP_Http.php',
+	'WP_Http/Compress.php',
+	'WP_Http/Cookie.php',
+	'WP_Http/Proxy.php',
+	'WP_Http/Transport/Curl.php',
+	'WP_Http/Transport/ExtHTTP.php',
+	'WP_Http/Transport/Fopen.php',
+	'WP_Http/Transport/Socket.php',
+	'WP_Http/Transport/Streams.php',
+);
+
+echo "<?php\n";
+foreach ($files as $f) {
+	$lines = file("$src/$f");
+	foreach ($lines as $line) {
+		if ( strpos($line, 'require_once') !== false ) continue;
+		if ( strpos($line, '<?php') !== false ) continue;
+		if ( strpos($line, '?>') !== false ) continue;
+
+		echo $line;
+	}
+}
+echo "?>";
+
+
+?>
